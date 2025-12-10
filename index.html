@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Rural Cyber Guard | Cybersecurity for Farms & Rural Businesses</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Rural Cyber Guard provides practical cybersecurity, Smart Farm Secure and Cyber Essentials support for farms, rural homes and countryside businesses." />
+  <style>
+    :root {
+      --green-field: #3A8F4E;
+      --pine: #1F3D2E;
+      --cyber-blue: #005F9E;
+      --wheat: #D7C9A5;
+      --charcoal: #2A2A2A;
+      --light-bg: #f6f5f2;
+      --radius-lg: 14px;
+      --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--charcoal);
+      background: #ffffff;
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--cyber-blue);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--pine), var(--green-field));
+      color: #fff;
+      padding: 1rem 0;
+      box-shadow: var(--shadow-soft);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo-text {
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 0.95rem;
+    }
+
+    .logo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .logo-mark {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.25rem;
+      font-size: 0.9rem;
+    }
+
+    .nav-links a {
+      color: #f7f7f7;
+      opacity: 0.9;
+    }
+
+    .nav-links a:hover {
+      opacity: 1;
+    }
+
+    .nav-cta {
+      font-size: 0.9rem;
+      background: #fff;
+      color: var(--pine);
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.18);
+      white-space: nowrap;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 3.5rem 0 3rem;
+      background: radial-gradient(circle at top left, rgba(215,201,165,0.42), transparent 55%);
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.5fr);
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .hero-kicker {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.75rem;
+      color: var(--cyber-blue);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.1rem, 4vw, 2.7rem);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      color: var(--pine);
+    }
+
+    .hero h1 span {
+      color: var(--green-field);
+    }
+
+    .hero p {
+      font-size: 0.98rem;
+      max-width: 32rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-highlight {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 0.8rem;
+      border-radius: 999px;
+      background: rgba(58,143,78,0.08);
+      font-size: 0.8rem;
+      color: var(--pine);
+      margin-bottom: 1rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .btn-primary, .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.7rem 1.4rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      box-shadow: var(--shadow-soft);
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--green-field);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #327943;
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: var(--pine);
+    }
+
+    .btn-secondary:hover {
+      background: #f0eee8;
+    }
+
+    .hero-meta {
+      font-size: 0.8rem;
+      color: #666;
+    }
+
+    .hero-card {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: 1.4rem 1.3rem;
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      gap: 0.7rem;
+      font-size: 0.85rem;
+    }
+
+    .hero-card h3 {
+      font-size: 1rem;
+      color: var(--pine);
+      margin-bottom: 0.1rem;
+    }
+
+    .hero-card-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(0,95,158,0.08);
+      color: var(--cyber-blue);
+      font-size: 0.75rem;
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.75rem;
+      color: #555;
+    }
+
+    .stat strong {
+      font-size: 1rem;
+      color: var(--pine);
+    }
+
+    /* Sections */
+    section {
+      padding: 3rem 0;
+    }
+
+    section:nth-of-type(even) {
+      background: var(--light-bg);
+    }
+
+    .section-heading {
+      font-size: 1.5rem;
+      margin-bottom: 0.25rem;
+      color: var(--pine);
+    }
+
+    .section-kicker {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--cyber-blue);
+      margin-bottom: 0.3rem;
+      font-weight: 600;
+    }
+
+    .section-intro {
+      max-width: 42rem;
+      font-size: 0.95rem;
+      margin-bottom: 1.6rem;
+    }
+
+    /* Cards */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.4rem;
+    }
+
+    .card {
+      background: #fff;
+      padding: 1.1rem 1.1rem 1.2rem;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      font-size: 0.9rem;
+    }
+
+    .card h3 {
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+      color: var(--pine);
+    }
+
+    .card small {
+      display: block;
+      font-size: 0.75rem;
+      color: #666;
+      margin-bottom: 0.4rem;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(31,61,46,0.08);
+      font-size: 0.72rem;
+      color: var(--pine);
+      margin-bottom: 0.5rem;
+    }
+
+    ul {
+      padding-left: 1.1rem;
+      margin-top: 0.3rem;
+      font-size: 0.9rem;
+    }
+
+    li {
+      margin-bottom: 0.2rem;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 1.8rem;
+      align-items: flex-start;
+    }
+
+    .highlight-box {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      padding: 1.1rem 1.2rem;
+      box-shadow: var(--shadow-soft);
+      font-size: 0.9rem;
+    }
+
+    .highlight-box h3 {
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .steps {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .steps li {
+      margin-bottom: 0.6rem;
+    }
+
+    .steps strong {
+      display: inline-block;
+      width: 1.7rem;
+      height: 1.7rem;
+      border-radius: 50%;
+      background: var(--green-field);
+      color: #fff;
+      font-size: 0.78rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 0.4rem;
+    }
+
+    .badge-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
+      font-size: 0.8rem;
+    }
+
+    .badge {
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.1);
+      background: #fff;
+    }
+
+    /* Testimonials */
+    .testimonial {
+      background: #fff;
+      border-left: 4px solid var(--green-field);
+      padding: 1rem 1.2rem;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      font-size: 0.9rem;
+    }
+
+    .testimonial footer {
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      color: #555;
+    }
+
+    /* Contact */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 1.6rem;
+    }
+
+    form {
+      display: grid;
+      gap: 0.7rem;
+      font-size: 0.9rem;
+    }
+
+    label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #444;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 0.6rem 0.75rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-family: inherit;
+      font-size: 0.9rem;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    footer {
+      padding: 1.5rem 0 2rem;
+      background: var(--pine);
+      color: #eee;
+      font-size: 0.8rem;
+    }
+
+    footer a {
+      color: #fff;
+    }
+
+    @media (max-width: 800px) {
+      .hero-inner,
+      .two-col,
+      .contact-grid {
+        grid-template-columns: minmax(0,1fr);
+      }
+      header {
+        position: static;
+      }
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .nav-links {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container nav">
+      <div class="logo-badge">
+        <div class="logo-mark">RCG</div>
+        <div class="logo-text">Rural Cyber Guard</div>
+      </div>
+      <nav class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#smart-farm">Smart Farm Secure</a>
+        <a href="#ce">Cyber Essentials</a>
+        <a href="#how">How it works</a>
+        <a href="#contact" class="nav-cta">07967 656987</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container hero-inner">
+        <div>
+          <div class="hero-kicker">Cybersecurity for the countryside</div>
+          <h1>Practical cyber protection for <span>farms & rural businesses</span>.</h1>
+          <p>Rural Cyber Guard secures Wi-Fi, computers, CCTV, smart farm equipment and cloud accounts for farms, estates and rural SMEs — with simple, no-nonsense support.</p>
+          <div class="hero-highlight">
+            <span>🔒</span>
+            <span>Local, jargon-free cybersecurity for rural life.</span>
+          </div>
+          <div class="hero-actions">
+            <a href="#contact" class="btn-primary">Book a free 15-minute chat</a>
+            <a href="#services" class="btn-secondary">View services</a>
+          </div>
+          <div class="hero-meta">
+            Tel: <strong>07967 656987</strong> · Email: <a href="mailto:support@ruralcyberguard.co.uk">support@ruralcyberguard.co.uk</a>
+          </div>
+        </div>
+        <aside class="hero-card">
+          <h3>Rural Cyber Guard at a glance</h3>
+          <p>Built specifically for farms, rural homes and countryside businesses.</p>
+          <div class="hero-card-row">
+            <div class="pill">Smart Farm Secure</div>
+            <div class="pill">Protect+ Monitoring</div>
+            <div class="pill">Cyber Essentials support</div>
+          </div>
+          <div class="hero-card-row">
+            <div class="stat">
+              <strong>3 core areas</strong>
+              <span>Audit · Protect · Respond</span>
+            </div>
+            <div class="stat">
+              <strong>Rural-first</strong>
+              <span>Tailored to farms & estates</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services">
+      <div class="container">
+        <div class="section-kicker">Services</div>
+        <h2 class="section-heading">What Rural Cyber Guard does for you</h2>
+        <p class="section-intro">
+          We focus on practical, affordable cybersecurity that fits real-world rural operations. No unnecessary complexity, no scare tactics — just clear protection where it matters.
+        </p>
+
+        <div class="grid">
+          <div class="card">
+            <span class="tag">Assessment</span>
+            <h3>Rural Home & Farm Cyber Scan</h3>
+            <small>Entry-level security health check</small>
+            <p>A quick, structured review of your devices, Wi-Fi, passwords and basic protections — ideal for family farms and small rural businesses.</p>
+            <ul>
+              <li>Wi-Fi & router check</li>
+              <li>Key devices & accounts review</li>
+              <li>Simple “fix-first” action list</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <span class="tag">Audit</span>
+            <h3>Farm & Rural Business Security Assessment</h3>
+            <small>Deeper look at your whole operation</small>
+            <p>End-to-end look at networks, CCTV, cloud accounts and smart equipment with a practical remediation plan.</p>
+            <ul>
+              <li>Farm office & yard networks</li>
+              <li>CCTV / NVR security review</li>
+              <li>Cloud & email account hardening</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <span class="tag">Monitoring</span>
+            <h3>Protect+ Monitoring</h3>
+            <small>Ongoing watch over key systems</small>
+            <p>Lightweight monitoring, alerting and periodic reviews tailored for rural environments.</p>
+            <ul>
+              <li>Endpoint & server monitoring</li>
+              <li>Patch & AV status checks</li>
+              <li>Priority support for incidents</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <span class="tag">Family & staff</span>
+            <h3>Digital Safety for Families & Teams</h3>
+            <small>People-centred protection</small>
+            <p>Help for families, farm workers and small teams to stay safe from scams, phishing and account compromise.</p>
+            <ul>
+              <li>Device & app safety</li>
+              <li>Simple staff training</li>
+              <li>Clear guidance notes</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Smart Farm Secure -->
+    <section id="smart-farm">
+      <div class="container">
+        <div class="section-kicker">Smart Farm Secure</div>
+        <h2 class="section-heading">Securing your machinery, CCTV & smart kit</h2>
+        <p class="section-intro">
+          Modern farms rely on connected machinery, cameras and sensors. Smart Farm Secure focuses specifically on these systems, helping you reduce risk without disrupting daily work.
+        </p>
+
+        <div class="two-col">
+          <div>
+            <h3>What Smart Farm Secure covers</h3>
+            <ul>
+              <li>Farm Wi-Fi, routers and outdoor access points</li>
+              <li>CCTV, NVRs and remote viewing access</li>
+              <li>Telematics portals and machinery logins (where in scope)</li>
+              <li>IoT devices: gates, pumps, sensors and alarms</li>
+              <li>Simple guidance for staff and contractors</li>
+            </ul>
+            <div class="badge-list">
+              <span class="badge">Minimal downtime</span>
+              <span class="badge">On-farm visits available</span>
+              <span class="badge">Plain-English reporting</span>
+            </div>
+          </div>
+          <div class="highlight-box">
+            <h3>Smart Farm Secure in 4 steps</h3>
+            <ul class="steps">
+              <li><strong>1</strong> Discover – map your connected equipment & access points.</li>
+              <li><strong>2</strong> Secure – lock down weak settings, passwords and exposed services.</li>
+              <li><strong>3</strong> Monitor – optional light-touch monitoring of critical systems.</li>
+              <li><strong>4</strong> Educate – give you and your team clear “do this, not that” guidance.</li>
+            </ul>
+            <p style="margin-top:0.6rem;">Smart Farm Secure can be a one-off exercise or part of an ongoing Protect+ plan.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cyber Essentials -->
+    <section id="ce">
+      <div class="container">
+        <div class="section-kicker">Cyber Essentials</div>
+        <h2 class="section-heading">Straightforward Cyber Essentials support</h2>
+        <p class="section-intro">
+          Whether you’re bidding for contracts, working with the public sector or just want a recognised security baseline, Rural Cyber Guard can help you prepare for Cyber Essentials in a structured, low-jargon way.
+        </p>
+
+        <div class="two-col">
+          <div>
+            <h3>What we do</h3>
+            <ul>
+              <li>Explain Cyber Essentials in rural-friendly language</li>
+              <li>Define what’s in scope and what isn’t</li>
+              <li>Perform a gap analysis against the five CE control areas</li>
+              <li>Help implement realistic, proportionate fixes</li>
+              <li>Support you through the online questionnaire and evidence gathering</li>
+            </ul>
+          </div>
+          <div class="highlight-box">
+            <h3>Important note</h3>
+            <p>
+              Rural Cyber Guard is not an IASME certification body and does not issue Cyber Essentials certificates.
+              We act as your practical guide and technical partner to help you get ready and improve your security posture.
+            </p>
+            <p style="margin-top:0.6rem;">
+              Most small rural businesses complete the core activities in a few focused sessions, with minimal disruption.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section id="how">
+      <div class="container">
+        <div class="section-kicker">Approach</div>
+        <h2 class="section-heading">How working with Rural Cyber Guard feels</h2>
+        <p class="section-intro">
+          Our approach is designed around the realities of running a farm or rural business: time-poor, practical, and focused on what matters most.
+        </p>
+
+        <div class="two-col">
+          <div>
+            <ul class="steps">
+              <li><strong>1</strong> Quick discovery call – understand your farm or business, current systems and concerns.</li>
+              <li><strong>2</strong> On-site or remote review – structured assessment of networks, devices and key risks.</li>
+              <li><strong>3</strong> Clear, prioritised actions – what to fix now, what to plan for later.</li>
+              <li><strong>4</strong> Implementation – we can do the work, or support your existing IT provider.</li>
+              <li><strong>5</strong> Ongoing support – Protect+ monitoring and periodic reviews, if you choose.</li>
+            </ul>
+          </div>
+          <div>
+            <div class="testimonial">
+              “We keep the technology conversation grounded in real farm operations: sheds, fields, machinery and people. 
+              No buzzwords, no scare tactics – just straightforward protection for your livelihood.”
+              <footer>— Rural Cyber Guard</footer>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <div class="container">
+        <div class="section-kicker">Contact</div>
+        <h2 class="section-heading">Let’s talk about your farm or rural business</h2>
+        <p class="section-intro">
+          Whether you want a quick health check, help with a specific issue or a structured plan for your whole operation, the first step is a short, no-obligation conversation.
+        </p>
+
+        <div class="contact-grid">
+          <div>
+            <h3>Book a free 15-minute call</h3>
+            <p style="font-size:0.9rem; margin-bottom:0.7rem;">
+              Call or message directly, or send a request using the form.
+            </p>
+            <p style="font-size:0.9rem; margin-bottom:0.4rem;">
+              <strong>Phone:</strong> 07967 656987<br/>
+              <strong>Email:</strong> <a href="mailto:support@ruralcyberguard.co.uk">support@ruralcyberguard.co.uk</a>
+            </p>
+            <p style="font-size:0.85rem; margin-top:0.7rem;">
+              Based in Buckinghamshire and able to support farms and rural businesses across the UK via a blend of remote and on-site services.
+            </p>
+          </div>
+          <div>
+            <form>
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" placeholder="Your name" />
+
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="you@example.com" />
+
+              <label for="phone">Phone</label>
+              <input id="phone" name="phone" type="tel" placeholder="Optional, e.g. 07967 656987" />
+
+              <label for="message">How can we help?</label>
+              <textarea id="message" name="message" placeholder="Tell us a little about your farm or rural business, and what you’d like help with."></textarea>
+
+              <button type="submit" class="btn-primary">Send enquiry</button>
+              <p style="font-size:0.75rem; color:#666; margin-top:0.4rem;">
+                This form is a static example – connect it to your preferred email or form tool (e.g. Formspree, Netlify, or your web host).
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;">
+      <div>© <span id="year"></span> Rural Cyber Guard. All rights reserved.</div>
+      <div>Tel: 07967 656987 · Email: <a href="mailto:support@ruralcyberguard.co.uk">support@ruralcyberguard.co.uk</a></div>
+    </div>
+  </footer>
+
+  <script>
+    // Set current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
