@@ -97,8 +97,10 @@ module.exports = async function (context, req) {
         },
         body: {
           reply:
-            "I’m having trouble talking to the AI service right now. " +
-            "Please try again later or contact Matthew on 07967 656987."
+            "OpenAI error: " +
+        text
+            #"I’m having trouble talking to the AI service right now. " +
+            #"Please try again later or contact Matthew on 07967 656987."
         }
       };
       return;
