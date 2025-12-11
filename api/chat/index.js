@@ -1,7 +1,7 @@
 // api/chat/index.js
 
 module.exports = async function (context, req) {
-  // Handle CORS preflight
+  // CORS preflight support
   if (req.method === "OPTIONS") {
     context.res = {
       status: 204,
@@ -24,7 +24,7 @@ module.exports = async function (context, req) {
     userMessage = "(GET request – no message body)";
   }
 
-  // If no message, just echo back a friendly note
+  // If no message given, just say hello
   if (!userMessage) {
     context.res = {
       status: 200,
@@ -33,7 +33,8 @@ module.exports = async function (context, req) {
         "Access-Control-Allow-Origin": "*"
       },
       body: {
-        reply: "Hi, this is the Rural Cyber Guard assistant. Ask me a question about farm or rural cybersecurity."
+        reply:
+          "Hi, this is the Rural Cyber Guard assistant. Ask me a question about farm or rural cybersecurity."
       }
     };
     return;
@@ -42,7 +43,7 @@ module.exports = async function (context, req) {
   try {
     const apiKey = process.env.OPENAI_API_KEY;
 
-    // If you haven't set up an OpenAI key yet, DON'T crash – reply gracefully
+    // If no API key configured, DO NOT crash – respond gracefully
     if (!apiKey) {
       context.log.warn("OPENAI_API_KEY not configured. Returning static reply.");
       context.res = {
@@ -53,14 +54,14 @@ module.exports = async function (context, req) {
         },
         body: {
           reply:
-            "Our AI assistant is not fully configured yet, but we’d still love to help. " +
+            "Our AI assistant isn’t fully configured yet, but we’d still love to help. " +
             "Please contact Matthew directly on 07967 656987 or email support@ruralcyberguard.co.uk."
         }
       };
       return;
     }
 
-    // Call OpenAI's chat completions endpoint
+    // Call OpenAI's chat API
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -68,6 +69,7 @@ module.exports = async function (context, req) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
+        // Use a safe, widely-available model name
         model: "gpt-4o-mini",
         messages: [
           {
@@ -87,20 +89,18 @@ module.exports = async function (context, req) {
     const text = await response.text();
 
     if (!response.ok) {
-      // Log full response for debugging in Azure logs
       context.log.error("OpenAI API error:", response.status, text);
+      // Do NOT return 500 – keep the UI happy
       context.res = {
-        status: 200, // Return 200 so the UI doesn’t show a hard error
+        status: 200,
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*"
         },
         body: {
           reply:
-            "OpenAI error: " +
-        text
-            #"I’m having trouble talking to the AI service right now. " +
-            #"Please try again later or contact Matthew on 07967 656987."
+            "I’m having trouble talking to the AI service right now. " +
+            "Please try again later or contact Matthew on 07967 656987."
         }
       };
       return;
@@ -121,8 +121,9 @@ module.exports = async function (context, req) {
     };
   } catch (err) {
     context.log.error("Chat function error:", err.message || err);
+    // Still return 200 so the front-end never sees a 500
     context.res = {
-      status: 200, // Still 200; give a friendly message instead of 500
+      status: 200,
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*"
