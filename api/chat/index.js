@@ -1,8 +1,7 @@
 // api/chat/index.js
-const fetch = require("node-fetch"); // for Node < 18 in Functions
 
 module.exports = async function (context, req) {
-  // CORS preflight
+  // Handle CORS preflight
   if (req.method === "OPTIONS") {
     context.res = {
       status: 204,
@@ -56,8 +55,13 @@ module.exports = async function (context, req) {
       })
     });
 
-    const data = await response.json();
+    if (!response.ok) {
+      const text = await response.text();
+      context.log.error("OpenAI API error:", response.status, text);
+      throw new Error(`OpenAI API returned ${response.status}`);
+    }
 
+    const data = await response.json();
     const reply =
       data.choices?.[0]?.message?.content ||
       "Sorry, I couldn't generate a response.";
@@ -71,7 +75,7 @@ module.exports = async function (context, req) {
       body: { reply }
     };
   } catch (err) {
-    context.log.error("Chat error:", err);
+    context.log.error("Chat error:", err.message || err);
     context.res = {
       status: 500,
       headers: { "Access-Control-Allow-Origin": "*" },
@@ -79,4 +83,5 @@ module.exports = async function (context, req) {
     };
   }
 };
+
 
