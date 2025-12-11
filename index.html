@@ -865,24 +865,28 @@
       busy = true;
       addMessage("assistant", "Thinking...");
 
-      try {
-        const res = await fetch("/api/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: text })
-        });
+     try {
+  const res = await fetch("/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message: text })
+  });
 
-        const data = await res.json();
-        // Remove the “Thinking...” message
-        const thinking = messages.querySelector(".rcg-assistant:last-child");
-        if (thinking && thinking.textContent === "Thinking...") {
-          messages.removeChild(thinking);
-        }
-        addMessage("assistant", data.reply || "Sorry, I couldn't respond.");
-      } catch (err) {
-        console.error(err);
-        addMessage("assistant", "Sorry, there was a problem talking to the assistant.");
-      } finally {
+  const data = await res.json();
+  console.log("Chat API response:", data);
+
+  // Remove "Thinking..." message if you added one before
+  const thinking = messages.querySelector(".rcg-assistant:last-child");
+  if (thinking && thinking.textContent === "Thinking...") {
+    messages.removeChild(thinking);
+  }
+
+  addMessage("assistant", data.reply || "Sorry, I couldn't respond.");
+} catch (err) {
+  console.error("Chat fetch error:", err);
+  addMessage("assistant", "Sorry, there was a problem talking to the assistant.");
+}
+finally {
         busy = false;
       }
     });
