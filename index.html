@@ -793,112 +793,66 @@
               Based in Buckinghamshire and able to support farms and rural businesses across the UK via a blend of remote and on-site services.
             </p>
           </div>
-          <div>
-            <form>
-              <label for="name">Name</label>
-              <input id="name" name="name" type="text" placeholder="Your name" />
-
-              <label for="email">Email</label>
-              <input id="email" name="email" type="email" placeholder="you@example.com" />
-
-              <label for="phone">Phone</label>
-              <input id="phone" name="phone" type="tel" placeholder="Optional, e.g. 07967 656987" />
-
-              <label for="message">How can we help?</label>
-              <textarea id="message" name="message" placeholder="Tell us a little about your farm or rural business, and what you’d like help with."></textarea>
-
-              <button type="submit" class="btn-primary">Send enquiry</button>
-              <p style="font-size:0.75rem; color:#666; margin-top:0.4rem;">
-                This form is a static example – connect it to your preferred email or form tool (e.g. Formspree, Netlify, or your web host).
-              </p>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;">
-      <div>© <span id="year"></span> Rural Cyber Guard. All rights reserved. Operated by CTO Services Ltd.</div>
-      <div>Tel: 07967 656987 · Email: <a href="mailto:support@ctoservices.co.uk">support@ruralcyberguard.co.uk</a></div>
-    </div>
-  </footer>
-
-  <script>
-    // Set current year in footer
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
-  <!-- Rural Cyber Guard Chatbot -->
-<div id="rcg-chat-launcher">💬</div>
-
-<div id="rcg-chat-panel">
-  <div id="rcg-chat-header">Ask Rural Cyber Guard</div>
-  <div id="rcg-chat-messages"></div>
-  <form id="rcg-chat-form">
-    <input id="rcg-chat-input" type="text" placeholder="Ask a question..." autocomplete="off" />
-  </form>
-</div>
 <script>
   (function () {
-    const launcher = document.getElementById("rcg-chat-launcher");
-    const panel = document.getElementById("rcg-chat-panel");
-    const form = document.getElementById("rcg-chat-form");
-    const input = document.getElementById("rcg-chat-input");
-    const messages = document.getElementById("rcg-chat-messages");
-    let busy = false;
+    const form = document.getElementById("contactForm");
+    if (!form) return;
 
-    if (!launcher || !panel) return;
+    const statusEl = document.getElementById("contactStatus");
+    const submitBtn = document.getElementById("contactSubmit");
 
-    launcher.addEventListener("click", () => {
-      panel.style.display = panel.style.display === "flex" ? "none" : "flex";
-      panel.style.flexDirection = "column";
-      input && input.focus();
-    });
+    function setStatus(text, ok) {
+      statusEl.textContent = text || "";
+      statusEl.style.color = ok ? "var(--green-field)" : "#b00020";
+    }
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const text = (input.value || "").trim();
-      if (!text || busy) return;
-      addMessage("user", text);
-      input.value = "";
-      busy = true;
-      addMessage("assistant", "Thinking...");
+      setStatus("");
 
-     try {
-  const res = await fetch("/api/chat", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message: text })
-  });
+      if (!form.checkValidity()) {
+        setStatus("Please complete the required fields (name, email and message).", false);
+        return;
+      }
 
-  const data = await res.json();
-  console.log("Chat API response:", data);
+      const data = Object.fromEntries(new FormData(form).entries());
 
-  // Remove "Thinking..." message if you added one before
-  const thinking = messages.querySelector(".rcg-assistant:last-child");
-  if (thinking && thinking.textContent === "Thinking...") {
-    messages.removeChild(thinking);
-  }
+      // Honeypot check (spam bots fill it)
+      if (data.company && data.company.trim().length > 0) {
+        setStatus("Thanks — your message has been received.", true);
+        form.reset();
+        return;
+      }
 
-  addMessage("assistant", data.reply || "Sorry, I couldn't respond.");
-} catch (err) {
-  console.error("Chat fetch error:", err);
-  addMessage("assistant", "Sorry, there was a problem talking to the assistant.");
-}
-finally {
-        busy = false;
+      submitBtn.disabled = true;
+      const originalBtnText = submitBtn.textContent;
+      submitBtn.textContent = "Sending…";
+
+      try {
+        const res = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: (data.name || "").trim(),
+            email: (data.email || "").trim(),
+            phone: (data.phone || "").trim(),
+            message: (data.message || "").trim(),
+            source: "website-contact-form"
+          })
+        });
+
+        const payload = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(payload.error || `Request failed (${res.status})`);
+
+        setStatus("Thanks — we’ve received your enquiry and will be in touch shortly.", true);
+        form.reset();
+      } catch (err) {
+        console.error("Contact form error:", err);
+        setStatus("Sorry — we couldn’t send your message. Please try again or call 07967 656987.", false);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalBtnText;
       }
     });
-
-    function addMessage(role, text) {
-      const div = document.createElement("div");
-      div.className = "rcg-msg rcg-" + (role === "user" ? "user" : "assistant");
-      div.textContent = text;
-      messages.appendChild(div);
-      messages.scrollTop = messages.scrollHeight;
-    }
   })();
-</script>  
-</body>
-</html>
+</script>
