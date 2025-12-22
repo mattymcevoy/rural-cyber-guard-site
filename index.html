@@ -846,7 +846,7 @@
     </div>
   </div>
 </section>
-    <script>
+   <script>
 (function () {
   const form = document.getElementById("contactForm");
   if (!form) return;
@@ -887,16 +887,16 @@
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: data.name?.trim(),
-          email: data.email?.trim(),
-          phone: data.phone?.trim(),
-          message: data.message?.trim(),
+          name: (data.name || "").trim(),
+          email: (data.email || "").trim(),
+          phone: (data.phone || "").trim(),
+          message: (data.message || "").trim(),
           source: "website-contact-form"
         })
       });
 
       const payload = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(payload.error || "Request failed");
+      if (!res.ok) throw new Error(payload.error || `Request failed (${res.status})`);
 
       setStatus("Thanks — we’ve received your enquiry and will be in touch shortly.", true);
       form.reset();
@@ -910,22 +910,93 @@
   });
 })();
 </script>
-    </main>
 
-<footer> ... </footer>
+</main>
 
-<script>year script</script>
+<footer>
+  <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;">
+    <div>© <span id="year"></span> Rural Cyber Guard. All rights reserved. Operated by CTO Services Ltd.</div>
+    <div>Tel: 07967 656987 · Email: <a href="mailto:support@ruralcyberguard.co.uk">support@ruralcyberguard.co.uk</a></div>
+  </div>
+</footer>
 
-<!-- chat html -->
-<div id="rcg-chat-launcher">💬</div>
-<div id="rcg-chat-panel"> ... </div>
+<script>
+  // Set current year in footer
+  const y = document.getElementById("year");
+  if (y) y.textContent = new Date().getFullYear();
+</script>
 
-<script>chat script</script>
+<!-- Rural Cyber Guard Chatbot -->
+<div id="rcg-chat-launcher" aria-label="Open chat" title="Ask Rural Cyber Guard">💬</div>
 
-<script>contact script</script>
+<div id="rcg-chat-panel" aria-live="polite">
+  <div id="rcg-chat-header">Ask Rural Cyber Guard</div>
+  <div id="rcg-chat-messages"></div>
+  <form id="rcg-chat-form">
+    <input id="rcg-chat-input" type="text" placeholder="Ask a question..." autocomplete="off" />
+  </form>
+</div>
+
+<script>
+(function () {
+  const launcher = document.getElementById("rcg-chat-launcher");
+  const panel = document.getElementById("rcg-chat-panel");
+  const form = document.getElementById("rcg-chat-form");
+  const input = document.getElementById("rcg-chat-input");
+  const messages = document.getElementById("rcg-chat-messages");
+  let busy = false;
+
+  if (!launcher || !panel || !form || !input || !messages) return;
+
+  launcher.addEventListener("click", () => {
+    panel.style.display = panel.style.display === "flex" ? "none" : "flex";
+    panel.style.flexDirection = "column";
+    input.focus();
+  });
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const text = (input.value || "").trim();
+    if (!text || busy) return;
+
+    addMessage("user", text);
+    input.value = "";
+    busy = true;
+    addMessage("assistant", "Thinking...");
+
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text })
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      // Remove "Thinking..."
+      const thinking = messages.querySelector(".rcg-assistant:last-child");
+      if (thinking && thinking.textContent === "Thinking...") {
+        messages.removeChild(thinking);
+      }
+
+      addMessage("assistant", data.reply || "Sorry, I couldn't respond.");
+    } catch (err) {
+      console.error("Chat fetch error:", err);
+      addMessage("assistant", "Sorry, there was a problem talking to the assistant.");
+    } finally {
+      busy = false;
+    }
+  });
+
+  function addMessage(role, text) {
+    const div = document.createElement("div");
+    div.className = "rcg-msg rcg-" + (role === "user" ? "user" : "assistant");
+    div.textContent = text;
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+  }
+})();
+</script>
 
 </body>
-</html>
-
-</body>
-</html>
+</html> 
