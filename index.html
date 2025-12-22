@@ -8,6 +8,8 @@
   <style>
     /* Chat widget */
 #rcg-chat-launcher {
+  pointer-events: auto;
+  z-index: 9999;
   position: fixed;
   right: 1.2rem;
   bottom: 1.2rem;
@@ -26,6 +28,11 @@
 }
 
 #rcg-chat-panel {
+  #rcg-chat-panel {
+  pointer-events: none;
+  [style*="display: flex"]
+  pointer-events: auto;
+}
   position: fixed;
   right: 1.2rem;
   bottom: 4.5rem;
@@ -588,9 +595,9 @@
           <h3>Rural Cyber Guard at a glance</h3>
           <p>Built specifically for farms, rural homes and countryside businesses.</p>
           <div class="hero-card-row">
-            <div class="pill">Smart Farm Secure</div>
-            <div class="pill">Protect+ Monitoring</div>
-            <div class="pill">Cyber Essentials support</div>
+            <a class="pill" href="#smart-farm">Smart Farm Secure</a>
+            <a class="pill" href="#services">Protect+ Monitoring</a>
+            <a class="pill" href="#ce">Cyber Essentials support</a>
           </div>
           <div class="hero-card-row">
             <div class="stat">
