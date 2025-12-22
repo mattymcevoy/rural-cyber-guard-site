@@ -6,10 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Rural Cyber Guard provides practical cybersecurity, Smart Farm Secure and Cyber Essentials support for farms, rural homes and countryside businesses." />
   <style>
-    /* Chat widget */
-#rcg-chat-launcher {
-  pointer-events: auto;
-  z-index: 9999;
+/* Chat widget (fixed + click-safe) */
+#rcg-chat-launcher{
   position: fixed;
   right: 1.2rem;
   bottom: 1.2rem;
@@ -23,16 +21,12 @@
   justify-content: center;
   box-shadow: 0 10px 20px rgba(0,0,0,0.25);
   cursor: pointer;
-  z-index: 50;
+  z-index: 9999;
   font-size: 1.4rem;
-}
-
-#rcg-chat-panel {
-  #rcg-chat-panel {
-  pointer-events: none;
-  [style*="display: flex"]
   pointer-events: auto;
 }
+
+#rcg-chat-panel{
   position: fixed;
   right: 1.2rem;
   bottom: 4.5rem;
@@ -44,48 +38,54 @@
   display: none;
   flex-direction: column;
   overflow: hidden;
-  z-index: 50;
+  z-index: 9999;
   font-size: 0.85rem;
+  pointer-events: none; /* IMPORTANT: hidden panel can't steal clicks */
 }
 
-#rcg-chat-header {
+/* When you open it (your JS sets display:flex inline), enable clicks */
+#rcg-chat-panel[style*="display: flex"]{
+  pointer-events: auto;
+}
+
+#rcg-chat-header{
   background: var(--pine);
   color: #fff;
   padding: 0.55rem 0.8rem;
   font-weight: 600;
 }
 
-#rcg-chat-messages {
+#rcg-chat-messages{
   padding: 0.6rem 0.7rem;
   flex: 1;
   overflow-y: auto;
 }
 
-.rcg-msg {
+.rcg-msg{
   margin-bottom: 0.4rem;
   padding: 0.4rem 0.55rem;
   border-radius: 10px;
   max-width: 90%;
 }
 
-.rcg-user {
+.rcg-user{
   background: var(--cyber-blue);
   color: #fff;
   margin-left: auto;
 }
 
-.rcg-assistant {
+.rcg-assistant{
   background: #f1f1f1;
   color: #222;
   margin-right: auto;
 }
 
-#rcg-chat-form {
+#rcg-chat-form{
   border-top: 1px solid #eee;
   padding: 0.4rem 0.5rem;
 }
 
-#rcg-chat-input {
+#rcg-chat-input{
   width: 100%;
   border-radius: 999px;
   border: 1px solid #ccc;
