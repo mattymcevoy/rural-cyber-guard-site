@@ -777,89 +777,155 @@
       </div>
     </section>
 
-    <!-- Contact -->
-    <section id="contact">
-      <div class="container">
-        <div class="section-kicker">Contact</div>
-        <h2 class="section-heading">Let’s talk about your farm or rural business</h2>
-        <p class="section-intro">
-          Whether you want a quick health check, help with a specific issue or a structured plan for your whole operation, the first step is a short, no-obligation conversation.
+  <!-- Contact -->
+<section id="contact">
+  <div class="container">
+    <div class="section-kicker">Contact</div>
+    <h2 class="section-heading">Let’s talk about your farm or rural business</h2>
+    <p class="section-intro">
+      Whether you want a quick health check, help with a specific issue or a structured plan for your
+      whole operation, the first step is a short, no-obligation conversation.
+    </p>
+
+    <div class="contact-grid">
+      <!-- Left column -->
+      <div>
+        <h3>Book a free 15-minute call</h3>
+        <p style="font-size:0.9rem; margin-bottom:0.7rem;">
+          Call or message directly, or send a request using the form.
         </p>
+        <p style="font-size:0.9rem; margin-bottom:0.4rem;">
+          <strong>Phone:</strong> 07967 656987<br/>
+          <strong>Email:</strong>
+          <a href="mailto:support@ruralcyberguard.co.uk">support@ruralcyberguard.co.uk</a>
+        </p>
+        <p style="font-size:0.85rem; margin-top:0.7rem;">
+          Based in Buckinghamshire and supporting farms and rural businesses across the UK via a blend
+          of remote and on-site services.
+        </p>
+      </div>
 
-        <div class="contact-grid">
-          <div>
-            <h3>Book a free 15-minute call</h3>
-            <p style="font-size:0.9rem; margin-bottom:0.7rem;">
-              Call or message directly, or send a request using the form.
-            </p>
-            <p style="font-size:0.9rem; margin-bottom:0.4rem;">
-              <strong>Phone:</strong> 07967 656987<br/>
-              <strong>Email:</strong> <a href="mailto:hello@ctoservices.co.uk">support@ruralcyberguard.co.uk</a>
-            </p>
-            <p style="font-size:0.85rem; margin-top:0.7rem;">
-              Based in Buckinghamshire and able to support farms and rural businesses across the UK via a blend of remote and on-site services.
-            </p>
+      <!-- Right column (form) -->
+      <div>
+        <form id="contactForm" novalidate>
+          <label for="name">Name *</label>
+          <input id="name" name="name" type="text" placeholder="Your name"
+                 autocomplete="name" required minlength="2" />
+
+          <label for="email">Email *</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com"
+                 autocomplete="email" required />
+
+          <label for="phone">Phone</label>
+          <input id="phone" name="phone" type="tel"
+                 placeholder="Optional, e.g. 07967 656987" autocomplete="tel" />
+
+          <label for="message">How can we help? *</label>
+          <textarea id="message" name="message"
+            placeholder="Tell us a little about your farm or rural business, and what you’d like help with."
+            required minlength="10"></textarea>
+
+          <!-- Honeypot anti-spam -->
+          <div style="position:absolute; left:-9999px; top:-9999px;" aria-hidden="true">
+            <label for="company">Company</label>
+            <input id="company" name="company" type="text"
+                   tabindex="-1" autocomplete="off" />
           </div>
-<script>
-  (function () {
-    const form = document.getElementById("contactForm");
-    if (!form) return;
 
-    const statusEl = document.getElementById("contactStatus");
-    const submitBtn = document.getElementById("contactSubmit");
+          <button type="submit" class="btn-primary" id="contactSubmit">
+            Send enquiry
+          </button>
 
-    function setStatus(text, ok) {
-      statusEl.textContent = text || "";
-      statusEl.style.color = ok ? "var(--green-field)" : "#b00020";
+          <p id="contactStatus" style="font-size:0.85rem; margin-top:0.6rem;"></p>
+
+          <p style="font-size:0.75rem; color:#666; margin-top:0.4rem;">
+            We’ll only use your details to respond to your enquiry.
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+    <script>
+(function () {
+  const form = document.getElementById("contactForm");
+  if (!form) return;
+
+  const statusEl = document.getElementById("contactStatus");
+  const submitBtn = document.getElementById("contactSubmit");
+
+  function setStatus(text, ok) {
+    if (!statusEl) return;
+    statusEl.textContent = text || "";
+    statusEl.style.color = ok ? "var(--green-field)" : "#b00020";
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    setStatus("");
+
+    if (!form.checkValidity()) {
+      setStatus("Please complete the required fields.", false);
+      return;
     }
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      setStatus("");
+    const data = Object.fromEntries(new FormData(form).entries());
 
-      if (!form.checkValidity()) {
-        setStatus("Please complete the required fields (name, email and message).", false);
-        return;
-      }
+    // Honeypot spam trap
+    if (data.company && data.company.trim().length > 0) {
+      setStatus("Thanks — your message has been received.", true);
+      form.reset();
+      return;
+    }
 
-      const data = Object.fromEntries(new FormData(form).entries());
+    submitBtn.disabled = true;
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = "Sending…";
 
-      // Honeypot check (spam bots fill it)
-      if (data.company && data.company.trim().length > 0) {
-        setStatus("Thanks — your message has been received.", true);
-        form.reset();
-        return;
-      }
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.name?.trim(),
+          email: data.email?.trim(),
+          phone: data.phone?.trim(),
+          message: data.message?.trim(),
+          source: "website-contact-form"
+        })
+      });
 
-      submitBtn.disabled = true;
-      const originalBtnText = submitBtn.textContent;
-      submitBtn.textContent = "Sending…";
+      const payload = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(payload.error || "Request failed");
 
-      try {
-        const res = await fetch("/api/contact", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: (data.name || "").trim(),
-            email: (data.email || "").trim(),
-            phone: (data.phone || "").trim(),
-            message: (data.message || "").trim(),
-            source: "website-contact-form"
-          })
-        });
-
-        const payload = await res.json().catch(() => ({}));
-        if (!res.ok) throw new Error(payload.error || `Request failed (${res.status})`);
-
-        setStatus("Thanks — we’ve received your enquiry and will be in touch shortly.", true);
-        form.reset();
-      } catch (err) {
-        console.error("Contact form error:", err);
-        setStatus("Sorry — we couldn’t send your message. Please try again or call 07967 656987.", false);
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalBtnText;
-      }
-    });
-  })();
+      setStatus("Thanks — we’ve received your enquiry and will be in touch shortly.", true);
+      form.reset();
+    } catch (err) {
+      console.error("Contact form error:", err);
+      setStatus("Sorry — we couldn’t send your message. Please call 07967 656987.", false);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
+    }
+  });
+})();
 </script>
+    </main>
+
+<footer> ... </footer>
+
+<script>year script</script>
+
+<!-- chat html -->
+<div id="rcg-chat-launcher">💬</div>
+<div id="rcg-chat-panel"> ... </div>
+
+<script>chat script</script>
+
+<script>contact script</script>
+
+</body>
+</html>
+
+</body>
+</html>
