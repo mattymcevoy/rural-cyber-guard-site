@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Services & Pricing | Rural Cyber Guard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Rural Cyber Guard services and pricing: Smart Farm Secure, Rural Business Cyber Check, Protect+ monitoring, Cyber Essentials preparation and digital safety." />
+
+  <style>
+    :root {
+      --green-field: #3A8F4E;
+      --pine: #1F3D2E;
+      --cyber-blue: #005F9E;
+      --wheat: #D7C9A5;
+      --charcoal: #2A2A2A;
+      --light-bg: #f6f5f2;
+      --radius-lg: 14px;
+      --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--charcoal);
+      background: #ffffff;
+      line-height: 1.6;
+    }
+    a { color: var(--cyber-blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header {
+      background: linear-gradient(135deg, var(--pine), var(--green-field));
+      color: #fff;
+      padding: 1rem 0;
+      box-shadow: var(--shadow-soft);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo-text {
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 0.95rem;
+    }
+
+    .logo-badge { display: inline-flex; align-items: center; gap: 0.4rem; }
+    .logo-mark {
+      width: 26px; height: 26px; border-radius: 50%;
+      border: 2px solid #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; font-weight: 700;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.25rem;
+      font-size: 0.9rem;
+      flex-wrap: wrap;
+    }
+    .nav-links a { color: #f7f7f7; opacity: 0.95; }
+    .nav-links a:hover { opacity: 1; }
+
+    /* Phone CTA (polished) */
+    .nav-links a.nav-cta{
+      background: #ffffff;
+      color: var(--pine) !important;
+      opacity: 1 !important;
+      padding: 0.5rem 0.95rem;
+      border-radius: 999px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+      border: 1px solid rgba(0,0,0,0.10);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .nav-links a.nav-cta:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 10px 18px rgba(0,0,0,0.20);
+      text-decoration: none;
+    }
+    .nav-links a.nav-cta::before{
+      content: "📞";
+      font-size: 0.95rem;
+    }
+
+    /* Page hero */
+    .page-hero {
+      padding: 3.25rem 0 2.25rem;
+      background: radial-gradient(circle at top left, rgba(215,201,165,0.42), transparent 55%);
+    }
+    .page-hero h1 {
+      font-size: clamp(2rem, 4vw, 2.6rem);
+      line-height: 1.1;
+      color: var(--pine);
+      margin-bottom: 0.75rem;
+    }
+    .page-hero p {
+      max-width: 54rem;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    .hero-meta {
+      font-size: 0.9rem;
+      color: #444;
+      margin-top: 0.25rem;
+    }
+    .hero-meta strong { color: var(--pine); }
+
+    .btn-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem; }
+    .btn-primary, .btn-secondary {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 0.7rem 1.4rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      box-shadow: var(--shadow-soft);
+      text-decoration: none;
+    }
+    .btn-primary { background: var(--green-field); color: #fff; }
+    .btn-primary:hover { background: #327943; }
+    .btn-secondary { background: #fff; color: var(--pine); }
+    .btn-secondary:hover { background: #f0eee8; }
+
+    section { padding: 3rem 0; }
+    section:nth-of-type(even) { background: var(--light-bg); }
+
+    .section-kicker {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--cyber-blue);
+      margin-bottom: 0.3rem;
+      font-weight: 700;
+    }
+
+    .section-heading { font-size: 1.6rem; color: var(--pine); margin-bottom: 0.6rem; }
+    .section-intro { max-width: 52rem; font-size: 0.98rem; margin-bottom: 1.6rem; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.3rem;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      padding: 1.15rem 1.15rem 1.2rem;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 0.18rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(31,61,46,0.08);
+      font-size: 0.74rem;
+      color: var(--pine);
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+
+    .card h3 { font-size: 1.05rem; color: var(--pine); margin-bottom: 0.35rem; }
+    .card p { font-size: 0.93rem; color: #333; }
+    .card .price { margin-top: 0.7rem; font-weight: 800; color: var(--pine); }
+    .muted { color: #555; font-size: 0.9rem; }
+
+    ul { padding-left: 1.1rem; margin-top: 0.6rem; }
+    li { margin-bottom: 0.25rem; }
+
+    .pricing {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.3rem;
+    }
+    .tier {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      padding: 1.15rem 1.15rem 1.2rem;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+    .tier h3 { color: var(--pine); margin-bottom: 0.35rem; }
+    .tier .tier-price { font-weight: 900; color: var(--pine); margin-bottom: 0.4rem; }
+    .tier small { display: block; color: #666; margin-bottom: 0.6rem; }
+
+    .note-box {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      padding: 1.1rem 1.2rem;
+      border-left: 4px solid var(--green-field);
+      max-width: 70rem;
+    }
+
+    footer {
+      padding: 1.5rem 0 2rem;
+      background: var(--pine);
+      color: #eee;
+      font-size: 0.85rem;
+    }
+    footer a { color: #fff; text-decoration: underline; }
+
+    @media (max-width: 800px) {
+      header { position: static; }
+      .nav { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container nav">
+      <div class="logo-badge">
+        <div class="logo-mark">RCG</div>
+        <div class="logo-text">Rural Cyber Guard</div>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html#services">Services</a>
+        <a href="services.html" style="text-decoration:underline; opacity:1;">Services & Pricing</a>
+        <a href="index.html#smart-farm">Smart Farm Secure</a>
+        <a href="index.html#ce">Cyber Essentials</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="tel:+447967656987" class="nav-cta">07967 656987</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Page Hero -->
+    <section class="page-hero">
+      <div class="container">
+        <div class="section-kicker">Services & pricing</div>
+        <h1>Practical cybersecurity for farms & rural businesses.</h1>
+        <p>
+          Rural Cyber Guard helps farms, estates and rural SMEs protect the systems they rely on every day —
+          from email and cloud accounts to CCTV, Wi-Fi and smart equipment — with plain-English advice and minimal disruption.
+        </p>
+        <div class="hero-meta">
+          <strong>Call:</strong> 07967 656987 &nbsp;·&nbsp;
+          <strong>Email:</strong> <a href="mailto:matt.mcevoy@ctoservices.co.uk">matt.mcevoy@ctoservices.co.uk</a>
+        </div>
+        <div class="btn-row">
+          <a class="btn-primary" href="index.html#contact">Book a free 15-minute chat</a>
+          <a class="btn-secondary" href="#pricing">View pricing</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why it matters -->
+    <section>
+      <div class="container">
+        <div class="section-kicker">Why this matters</div>
+        <h2 class="section-heading">Digital systems are now part of compliance and continuity</h2>
+        <p class="section-intro">
+          Across the UK, farms and rural businesses increasingly rely on digital systems to meet regulatory, assurance
+          and commercial requirements. Environmental reporting, animal welfare records, health and safety documentation,
+          payroll, tax and grant administration are now routinely managed through computers, online portals and cloud services.
+        </p>
+        <div class="note-box">
+          <p class="muted">
+            These requirements are governed by UK domestic legislation and standards, and depend on the availability and
+            integrity of IT systems such as email, accounting software, farm management platforms, CCTV and connected equipment.
+            Cybersecurity is therefore not “just IT” — it helps protect your ability to operate, demonstrate compliance, access
+            grants and continue trading without disruption.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section>
+      <div class="container">
+        <div class="section-kicker">Services</div>
+        <h2 class="section-heading">What Rural Cyber Guard offers</h2>
+        <p class="section-intro">
+          Simple, proportionate services designed for rural settings: shared devices, legacy kit, contractor access and minimal tolerance for downtime.
+        </p>
+
+        <div class="grid">
+          <div class="card">
+            <span class="tag">Smart systems</span>
+            <h3>Smart Farm Secure</h3>
+            <p><strong>Plain English:</strong> Securing farm Wi-Fi, CCTV, smart equipment and connected systems.</p>
+            <p class="muted">
+              A structured review of Wi-Fi, CCTV/NVRs, remote access, gates, sensors and portals, with practical hardening and clear guidance for staff/contractors.
+            </p>
+            <div class="price">From £500 – £1,200</div>
+          </div>
+
+          <div class="card">
+            <span class="tag">Assessment</span>
+            <h3>Rural Business Cyber Check</h3>
+            <p><strong>Plain English:</strong> A practical cyber health check for devices, email and cloud.</p>
+            <p class="muted">
+              We review core systems and the most common weaknesses (phishing exposure, weak passwords, outdated devices), then give a prioritised action plan.
+            </p>
+            <div class="price">From £350 – £750</div>
+          </div>
+
+          <div class="card">
+            <span class="tag">Ongoing</span>
+            <h3>Protect+ Cyber Support</h3>
+            <p><strong>Plain English:</strong> Lightweight ongoing protection, checks and support.</p>
+            <p class="muted">
+              Monitoring and periodic reviews that help you stay protected over time, with priority support if something goes wrong.
+            </p>
+            <div class="price">From £75 / month</div>
+          </div>
+
+          <div class="card">
+            <span class="tag">Compliance</span>
+            <h3>Cyber Essentials Preparation</h3>
+            <p><strong>Plain English:</strong> Hands-on help getting ready for Cyber Essentials.</p>
+            <p class="muted">
+              Scope definition, gap analysis, practical fixes and evidence support. We help you prepare; certification is issued by accredited bodies.
+            </p>
+            <div class="price">Typically £750 – £1,500</div>
+          </div>
+
+          <div class="card">
+            <span class="tag">People</span>
+            <h3>Digital Safety for Families & Teams</h3>
+            <p><strong>Plain English:</strong> Reduce scams and phishing through practical guidance.</p>
+            <p class="muted">
+              Clear, relatable support for safer everyday use of devices and accounts, especially where computers and mobiles are shared.
+            </p>
+            <div class="price">Per session or included in Protect+</div>
+          </div>
+
+          <div class="card">
+            <span class="tag">Trust</span>
+            <h3>What we don’t do</h3>
+            <p class="muted">
+              We’re not a certification body. We don’t use fear-based selling. We don’t lock clients into long contracts. We don’t sell hardware unless agreed.
+            </p>
+            <div class="price">Plain English. Clear scope.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing">
+      <div class="container">
+        <div class="section-kicker">Pricing</div>
+        <h2 class="section-heading">Simple pricing bands (transparent and grant-safe)</h2>
+        <p class="section-intro">
+          These are indicative ranges to help planning. Final pricing depends on scope, number of sites/devices and complexity.
+          We’ll confirm a fixed quote after a short discovery call.
+        </p>
+
+        <div class="pricing">
+          <div class="tier">
+            <h3>Protect+ Bronze</h3>
+            <div class="tier-price">From £75–£125 / month</div>
+            <small>Best for: small rural businesses wanting basic reassurance.</small>
+            <ul>
+              <li>Basic monitoring / checks</li>
+              <li>Annual security review</li>
+              <li>Email support</li>
+            </ul>
+          </div>
+
+          <div class="tier">
+            <h3>Protect+ Silver</h3>
+            <div class="tier-price">From £150–£250 / month</div>
+            <small>Best for: farms/rural SMEs with multiple devices and users.</small>
+            <ul>
+              <li>Enhanced monitoring</li>
+              <li>Quarterly reviews</li>
+              <li>Priority support</li>
+            </ul>
+          </div>
+
+          <div class="tier">
+            <h3>Protect+ Gold</h3>
+            <div class="tier-price">From £300+ / month</div>
+            <small>Best for: larger estates or higher-risk environments.</small>
+            <ul>
+              <li>Enhanced protection and reviews</li>
+              <li>Incident support</li>
+              <li>Annual on-site visit</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="margin-top:1.3rem;" class="note-box">
+          <p class="muted">
+            <strong>Cyber Essentials:</strong> preparation support is typically <strong>£750–£1,500</strong> depending on scope.
+            <br/>
+            <strong>One-off services:</strong> Smart Farm Secure (<strong>£500–£1,200</strong>) and Rural Business Cyber Check (<strong>£350–£750</strong>) are priced by size/complexity.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section>
+      <div class="container">
+        <div class="section-kicker">Next step</div>
+        <h2 class="section-heading">Book a free 15-minute chat</h2>
+        <p class="section-intro">
+          We’ll quickly understand your setup and recommend the most practical next steps — no jargon, no obligation.
+        </p>
+
+        <div class="btn-row">
+          <a class="btn-primary" href="index.html#contact">Send an enquiry</a>
+          <a class="btn-secondary" href="tel:+447967656987">Call 07967 656987</a>
+          <a class="btn-secondary" href="mailto:matt.mcevoy@ctoservices.co.uk">Email Matt</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;">
+      <div>© <span id="year"></span> Rural Cyber Guard. All rights reserved. Operated by CTO Services Ltd.</div>
+      <div>Tel: 07967 656987 · Email: <a href="mailto:matt.mcevoy@ctoservices.co.uk">matt.mcevoy@ctoservices.co.uk</a></div>
+    </div>
+  </footer>
+
+  <script>
+    const y = document.getElementById("year");
+    if (y) y.textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
